@@ -41,7 +41,8 @@ export class PhotoComponent implements OnInit {
           this.products = data.products;
           this.isError = false;
         },
-        error: () => {
+        error: (msg) => {
+          console.warn(`Some problem with ${msg.url}`);
           this.isError = true;
         },
       });
