@@ -9,7 +9,6 @@ import {
   Product,
   Products,
 } from 'src/app/models/Photos.model';
-import { PhotoRepository } from 'src/app/repository';
 
 @Component({
   selector: 'photo',
@@ -18,19 +17,14 @@ import { PhotoRepository } from 'src/app/repository';
 })
 export class PhotoComponent implements OnInit {
   public products: Product[] = [];
+  public isError: boolean = false;
 
-  constructor(
-    private readonly repository: PhotoRepository,
-    private readonly http: HttpClient
-  ) {}
+  constructor(private readonly http: HttpClient) {}
 
   ngOnInit(): void {
     const products = this.http.get<Products>('assets/products.json');
     const formats = this.http.get<Formats>('assets/formats.json');
     const papers = this.http.get<Papers>('assets/papers.json');
-    // this.getProducts.pipe(map());
-    // this.getFormats();
-    // this.getPapers();
 
     forkJoin([products, formats, papers])
       .pipe(
@@ -45,26 +39,11 @@ export class PhotoComponent implements OnInit {
         next: (data) => {
           this.products = data.products;
           console.log(data.products);
+          this.isError = false;
         },
-        error: (msg) => console.log(msg),
+        error: (msg) => {
+          this.isError = true;
+        },
       });
   }
-
-  //   private getProducts(): void {
-  //     this.repository.getProducts().subscribe((response: Products) => {
-  //       this.products = response.products;
-  //     });
-  //   }
-
-  //   private getFormats(): void {
-  //     this.repository.getFormat().subscribe((response: Formats) => {
-  //       this.formats = response.formats;
-  //     });
-  //   }
-
-  //   private getPapers(): void {
-  //     this.repository.getPaper().subscribe((response: Papers) => {
-  //       this.papers = response.papers;
-  //     });
-  //   }
 }

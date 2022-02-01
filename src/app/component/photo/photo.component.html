@@ -1,9 +1,10 @@
 <div class="container">
-    <div class ="photo">
-        <div>Identyfikator: </div>
-        <div>Produkt: </div>
-        <div>Typ: </div>
-        <div>Format: </div>
-        <div>Papier: </div>
+    <span class="error" *ngIf="isError">Coś poszło nie tak!!!</span>
+    <div class ="photo" *ngFor="let product of products">
+        <div>Identyfikator: {{product.productId}} </div>
+        <div>Produkt: {{product.product}}</div>
+        <div>Typ: {{product.typeId}} </div>
+        <div>Format: {{product.formatId}} </div>
+        <div>Papier: {{product.paperId}} </div>
     </div>
 </div>
