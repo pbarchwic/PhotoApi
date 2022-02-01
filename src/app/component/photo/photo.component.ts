@@ -38,7 +38,6 @@ export class PhotoComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          console.log(data.products);
           this.products = data.products;
           this.isError = false;
         },
