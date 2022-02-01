@@ -23,7 +23,7 @@ export class PhotoRepository {
       .pipe(map((response: Formats) => response));
   }
 
-  public getPaper(userId: number | string): Observable<Papers> {
+  public getPaper(): Observable<Papers> {
     const url = `https://www.empikfoto.pl/product/papers`;
     return this.http.get<Papers>(url).pipe(map((response: Papers) => response));
   }
