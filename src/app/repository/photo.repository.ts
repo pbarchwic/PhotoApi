@@ -3,38 +3,28 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Formats, Papers, Products } from '../models/Photos.model';
+
 @Injectable()
 export class PhotoRepository {
   constructor(private readonly http: HttpClient) {}
 
-  public getProducts(): Observable<any> {
+  public getProducts(): Observable<Products> {
     const url = `https://www.empikfoto.pl/product/list`;
     return this.http
-      .get<Response<any>>(url)
-      .pipe(
-        map((response: Response<OrganizationUserProfile>) => response.result)
-      );
+      .get<Products>(url)
+      .pipe(map((response: Products) => response));
   }
 
-  public getFormat(
-    userId: number | string
-  ): Observable<OrganizationUserProfile> {
+  public getFormat(): Observable<Formats> {
     const url = `https://www.empikfoto.pl/product/format`;
     return this.http
-      .get<Response<OrganizationUserProfile>>(url)
-      .pipe(
-        map((response: Response<OrganizationUserProfile>) => response.result)
-      );
+      .get<Formats>(url)
+      .pipe(map((response: Formats) => response));
   }
 
-  public getPaper(
-    userId: number | string
-  ): Observable<OrganizationUserProfile> {
+  public getPaper(userId: number | string): Observable<Papers> {
     const url = `https://www.empikfoto.pl/product/papers`;
-    return this.http
-      .get<Response<OrganizationUserProfile>>(url)
-      .pipe(
-        map((response: Response<OrganizationUserProfile>) => response.result)
-      );
+    return this.http.get<Papers>(url).pipe(map((response: Papers) => response));
   }
 }
