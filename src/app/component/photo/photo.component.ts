@@ -30,20 +30,36 @@ export class PhotoComponent implements OnInit {
       .pipe(
         map(([products, formats, papers]) => {
           products.products.map((product) => {
-            console.log(product);
+            this.getFormats(product, formats);
+            this.getPaper(product, papers);
           });
           return products;
         })
       )
       .subscribe({
         next: (data) => {
-          this.products = data.products;
           console.log(data.products);
+          this.products = data.products;
           this.isError = false;
         },
-        error: (msg) => {
+        error: () => {
           this.isError = true;
         },
       });
+  }
+
+  private getFormats(product: Product, formats: Formats): void {
+    product.format = formats.formats.find(
+      (format) => format.id === product.formatId
+    )?.format;
+    product.typeName = formats.formats.find(
+      (format) => format.typeId === product.typeId
+    )?.typeName;
+  }
+
+  private getPaper(product: Product, papers: Papers): void {
+    product.nameType = papers.papers.find(
+      (paper) => paper.id === product.paperId
+    )?.nameType;
   }
 }

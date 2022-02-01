@@ -4,6 +4,9 @@ export interface Product {
   typeId: number;
   formatId: number;
   paperId: number;
+  format?: string;
+  typeName?: string;
+  nameType?: string;
 }
 
 export interface Products {
